@@ -2,7 +2,9 @@ import { ReactTinyLinkType } from '../../ReactTinyLinkTypes'
 import { isEmpty, getTitleOfDoc, getAttrOfDocElement, fixRelativeUrls, getBaseUrl } from '../utils'
 
 export default async (url, htmlDoc, defaultMedia) => {
-  let baseUrl = getBaseUrl(htmlDoc, url)
+  // let baseUrl = getBaseUrl(htmlDoc, url)
+
+  htmlDoc = htmlDoc.querySelector('body')
 
   const image = [
     getAttrOfDocElement(htmlDoc, 'meta[property="og:logo"]', 'content'),
@@ -19,7 +21,7 @@ export default async (url, htmlDoc, defaultMedia) => {
     getAttrOfDocElement(htmlDoc, 'meta[itemprop="image"]', 'content'),
   ]
     .filter(i => !isEmpty(i))
-    .map(i => fixRelativeUrls(baseUrl, i))
+    .map(i => fixRelativeUrls(htmlDoc, i))
 
   return {
     title: getTitleOfDoc(htmlDoc),
