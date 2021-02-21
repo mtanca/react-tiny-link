@@ -5,6 +5,7 @@ export default async (url, htmlDoc, defaultMedia) => {
   // let baseUrl = getBaseUrl(htmlDoc, url)
 
   htmlDoc = htmlDoc.querySelector('body')
+  console.log(htmlDoc)
 
   const image = [
     getAttrOfDocElement(htmlDoc, 'meta[property="og:logo"]', 'content'),
