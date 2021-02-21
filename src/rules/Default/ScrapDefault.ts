@@ -1,8 +1,8 @@
 import { ReactTinyLinkType } from '../../ReactTinyLinkTypes'
-import { isEmpty, getTitleOfDoc, getAttrOfDocElement, fixRelativeUrls } from '../utils'
+import { isEmpty, getTitleOfDoc, getAttrOfDocElement, fixRelativeUrls, getBaseUrl } from '../utils'
 
 export default async (url, htmlDoc, defaultMedia) => {
-  htmlDoc = htmlDoc.querySelector('body')
+  let baseUrl = getBaseUrl(htmlDoc, url)
 
   const image = [
     getAttrOfDocElement(htmlDoc, 'meta[property="og:logo"]', 'content'),
@@ -28,7 +28,7 @@ export default async (url, htmlDoc, defaultMedia) => {
     description: getAttrOfDocElement(htmlDoc, "meta[name='description']", 'content'),
     video: [],
     image: !defaultMedia
-      ? image.filter(i => !isEmpty(i)).map(i => fixRelativeUrls(htmlDoc, i))
+      ? image.filter(i => !isEmpty(i)).map(i => fixRelativeUrls(baseUrl, i))
       : [...image, defaultMedia].filter(i => !isEmpty(i)),
     type: ReactTinyLinkType.TYPE_DEFAULT, // MIME Type
   }
