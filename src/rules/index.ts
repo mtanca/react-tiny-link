@@ -23,6 +23,7 @@ export default async (url: string, httpClient, defaultMedia: string[]) => {
   if (!isEmpty(url)) {
     const response = await httpClient
     const mimeType = response.headers.get('content-type')
+    console.log(mimeType, 'mimetyp....')
     const data = await response.text()
     const htmlDoc = new DOMParser().parseFromString(data, 'text/html')
     if (isVideo(mimeType)) {
